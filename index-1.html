@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>لغتي السرية</title>  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #00d4ff;
+      margin-bottom: 30px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 15px;
+
+      font-size: 20px;
+      font-family: Arial, sans-serif;
+
+      color: black;
+      background: white;
+
+      border: none;
+      border-radius: 12px;
+
+      resize: none;
+      outline: none;
+
+      pointer-events: auto;
+      user-select: text;
+      -webkit-user-select: text;
+
+      touch-action: auto;
+      -webkit-touch-callout: default;
+
+      direction: rtl;
+      text-align: right;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      margin-top: 15px;
+
+      font-size: 20px;
+      font-weight: bold;
+
+      border: none;
+      border-radius: 12px;
+
+      background: #00d4ff;
+      color: black;
+
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    #result {
+      width: 100%;
+      min-height: 70px;
+
+      margin-top: 25px;
+      padding: 20px;
+
+      background: #222;
+
+      border-radius: 12px;
+
+      font-size: 24px;
+
+      word-break: break-word;
+    }
+
+    .copy {
+      background: #333;
+      color: white;
+    }
+
+  </style></head><body>  <div class="container"><h1>🔐 لغتي السرية</h1>
+
+
+<textarea
+  id="input"
+  placeholder="اكتب النص هنا..."
+  autocomplete="off"
+  autocorrect="off"
+  autocapitalize="off"
+  spellcheck="false"
+  inputmode="text"></textarea>
+
+
+<button id="convertButton">
+  🔄 تحويل
+</button>
+
+
+<div id="result">
+  النتيجة تظهر هنا
+</div>
+
+
+<button class="copy" id="copyButton">
+  📋 نسخ النتيجة
+</button>
+
+  </div>  <script>
+
+    const map = {
+
+      "ا": "ي",
+      "ي": "ا",
+
+      "ب": "و",
+      "و": "ب",
+
+      "ت": "ه",
+      "ه": "ت",
+
+      "ث": "ن",
+      "ن": "ث",
+
+      "ج": "م",
+      "م": "ج",
+
+      "ح": "ل",
+      "ل": "ح",
+
+      "خ": "ك",
+      "ك": "خ",
+
+      "د": "ق",
+      "ق": "د",
+
+      "ذ": "ف",
+      "ف": "ذ",
+
+      "ر": "غ",
+      "غ": "ر",
+
+      "ز": "ع",
+      "ع": "ز",
+
+      "س": "ظ",
+      "ظ": "س",
+
+      "ش": "ط",
+      "ط": "ش",
+
+      "ص": "ض",
+      "ض": "ص"
+    };
+
+
+    function convertText() {
+
+      const input = document.getElementById("input");
+      const resultBox = document.getElementById("result");
+
+      const text = input.value;
+
+      let result = "";
+
+      for (const char of text) {
+
+        if (map[char]) {
+          result += map[char];
+        } else {
+          result += char;
+        }
+
+      }
+
+      resultBox.textContent = result;
+
+    }
+
+
+    document
+      .getElementById("convertButton")
+      .addEventListener("click", convertText);
+
+
+    document
+      .getElementById("copyButton")
+      .addEventListener("click", async function () {
+
+        const result =
+          document.getElementById("result").textContent;
+
+        if (
+          result &&
+          result !== "النتيجة تظهر هنا"
+        ) {
+
+          try {
+
+            await navigator.clipboard.writeText(result);
+
+            this.textContent = "✅ تم النسخ";
+
+            setTimeout(() => {
+              this.textContent = "📋 نسخ النتيجة";
+            }, 1500);
+
+          } catch (error) {
+
+            this.textContent = "❌ لم يتم النسخ";
+
+          }
+
+        }
+
+      });
+
+  </script></body></html>
